@@ -1,21 +1,23 @@
 import { useRouter } from "next/navigation";
-import React from "react";
 
-const ChatBox = ({ chat, currentUser }) => {
+const ChatBox = ({ chat, currentUser, currentChatId }) => {
   const otherMembers = chat?.members?.filter(
     (member) => member._id !== currentUser._id
   );
 
-  // Check if otherMembers is defined before accessing its properties
   const profileImage =
     otherMembers && otherMembers.length > 0
       ? otherMembers[0].profileImage
       : "/assets/user.png";
   const chatUserName =
     otherMembers && otherMembers.length > 0 ? otherMembers[0].username : "";
+
+  // Assuming chat.messages contains actual message objects, not just IDs
   const lastMessage =
-    chat?.messages?.length > 0 && chat?.messages[chat?.messages.length - 1];
-  // Convert lastMessageAt to Date object and format the time
+    chat?.messages && chat?.messages.length > 0
+      ? chat.messages[chat.messages.length - 1]
+      : null;
+
   const lastMessageTime = chat.lastMessageAt
     ? new Date(chat.lastMessageAt).toLocaleTimeString([], {
         hour: "numeric",
@@ -25,10 +27,24 @@ const ChatBox = ({ chat, currentUser }) => {
       })
     : "";
 
-    const router = useRouter();
+  const seen = lastMessage?.seenBy?.find(
+    (member) => member._id === currentUser._id
+  );
+
+  console.log("Chat ID:", chat._id);
+  console.log("Chat Members:", chat?.members);
+  console.log("Messages:", chat?.messages);
+  console.log("Last Message ID:", lastMessage?._id);
+  console.log("Last Message Text:", lastMessage?.text);
+  console.log("Chat Last Message Time:", lastMessageTime);
+
+  const router = useRouter();
 
   return (
-    <div className="chat-box" onClick={()=> router.push(`/chats/${chat._id}`)}>
+    <div
+      className={`chat-box ${chat._id === currentChatId ? "bg-blue-2" : ""}`}
+      onClick={() => router.push(`/chats/${chat._id}`)}
+    >
       <div className="chat-info">
         {chat?.isGroup ? (
           <img
@@ -49,18 +65,35 @@ const ChatBox = ({ chat, currentUser }) => {
           ) : (
             <p className="text-base-bold"> {chatUserName}</p>
           )}
-          {!lastMessage && <p>Started Chat</p>}
+          {lastMessage ? (
+            lastMessage?.photo ? (
+              lastMessage?.sender?._id === currentUser._id ? (
+                <p className="text-small-medium text-grey-3">You sent a photo</p>
+              ) : (
+                <p
+                  className={`${
+                    seen ? "text-small-medium text-grey-3" : "text-small-bold"
+                  }`}
+                >
+                  Received a photo
+                </p>
+              )
+            ) : (
+              <p
+                className={`last-message ${
+                  seen ? "text-small-medium text-grey-3" : "text-small-bold"
+                }`}
+              >
+                {lastMessage?.text}
+              </p>
+            )
+          ) : (
+            <p className="text-small-bold">Started Chat</p>
+          )}
         </div>
       </div>
       <div>
-      {!lastMessage && <p>
-          {/* {chat?.isGroup ? (
-            <p className="text-base-light">{lastMessageTime || ""}</p>
-          ) : (
-            <span>{lastMessageTime || ""}</span>
-          )} */}
-           {lastMessageTime}
-        </p>}
+        <p className="text-base-light text-grey-3">{lastMessageTime}</p>
       </div>
     </div>
   );

@@ -110,6 +110,7 @@ module.exports = {
     },
     extend: {
       colors: {
+        "white-1": "#FFFFFF",
         "blue-1": "#0A065C",
         "blue-2": "#F5F7FB",
         "blue-3": "#04A1E3",
@@ -120,6 +121,7 @@ module.exports = {
         "purple-1": "#C6D4FF",
         "purple-2": "#4D426D",
         "green-1": "#13E0E0",
+        "green-2": "#008000",
         "pink-1": "#FDDAD6",
       },
     },

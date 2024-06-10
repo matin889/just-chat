@@ -1,12 +1,12 @@
-"use client"
+"use client";
 
-import React from "react";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { Logout } from "@mui/icons-material";
 import { signOut, useSession } from "next-auth/react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import React from "react";
 
-const Navbar = () => {
+const TopBar = () => {
   const pathname = usePathname();
 
   const handleLogout = async () => {
@@ -25,15 +25,17 @@ const Navbar = () => {
       <div className="menu">
         <Link
           href="/chats"
-          className={`${pathname === "/chats" ? "text-white-1" : ""}`}
-          text-heading4-bold
+          className={`${
+            pathname === "/chats" ? "text-white-1" : ""
+          } text-heading4-bold`}
         >
           Chats
         </Link>
         <Link
           href="/contacts"
-          className={`${pathname === "/contacts" ? "text-red-1" : ""}`}
-          text-heading4-bold
+          className={`${
+            pathname === "/contacts" ? "text-white-1" : ""
+          } text-heading4-bold`}
         >
           Contacts
         </Link>
@@ -42,9 +44,10 @@ const Navbar = () => {
           sx={{ color: "#737373", cursor: "pointer" }}
           onClick={handleLogout}
         />
+
         <Link href="/profile">
           <img
-            src={user?.profileImage || "/assets/user.png"}
+            src={user?.profileImage || "/assets/user.jpg"}
             alt="profile"
             className="profilePhoto"
           />
@@ -54,4 +57,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default TopBar;

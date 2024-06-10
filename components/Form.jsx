@@ -60,8 +60,8 @@ const Form = ({type}) => {
       
   return (
     <div cllassName="auth">
-      <div className="content">
-        <img src="/assets/chat.png" alt="logo" className="logo" />
+      <div className="content" >
+        <img src="/assets/JOIN.png" alt="logo" className="logo" />
         <form className="form" onSubmit={handleSubmit(onSubmit)}>
           {type === "register" && (
             <div>
@@ -82,7 +82,7 @@ const Form = ({type}) => {
                 placeholder="Enter Username"
                 className="input-field"
               />
-              <PersonOutlined sx={{ color: "#737373" }} />
+              <PersonOutlined sx={{ color: "#FFFFFF" }} />
             </div>
             {errors.username && (
                 <p className="text-red-500">{errors.username.message}</p>
@@ -98,7 +98,7 @@ const Form = ({type}) => {
               placeholder="Enter Your Email"
               className="input-field"
             />
-            <EmailOutlined sx={{ color: "#737373" }} />
+            <EmailOutlined sx={{ color: "#FFFFFF" }} />
           </div>
           {errors.email && (
                 <p className="text-red-500">{errors.email.message}</p>
@@ -120,7 +120,7 @@ const Form = ({type}) => {
               placeholder="Enter Password"
               className="input-field"
             />
-            <LockOutlined sx={{ color: "#737373" }} />
+            <LockOutlined sx={{ color: "#FFFFFF" }} />
           </div>
           {errors.password && (
                 <p className="text-red-500">{errors.password.message}</p>
